@@ -1,0 +1,120 @@
+html {
+  background-color: #d9e0f7;
+  text-align: center;
+  min-width: 350px;
+  @import url(https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet");
+  font-family: 'Noto Sans', sans-serif;
+}
+
+h1 {
+  font-family: 'Pacifico', cursive;
+  font-size: 4em;
+  font-weight: lighter;
+  padding: 0px;
+  margin: 0px 10px;
+}
+
+.container {
+  padding: 0px;
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+}
+
+#pomodoro {
+  margin: 0 auto;
+  position: relative;
+  padding: 0px 10px;
+}
+
+#status {
+  width: 70%;
+  color: #efc4c4;
+  font-size: 2em;
+  position: absolute;
+  top: 45%;
+  left:50%;
+  transform: translate(-50%, -50%);
+}
+
+.timerDisplay {
+  color: #fff;
+  font-size: 4em;
+  font-weight: bold;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.btn {
+  margin: 10px;
+  padding: 8px 10px;
+  color: white;
+  font-size: 1em;
+  cursor:pointer;
+  border: 2px solid white;
+}
+
+#start-btn {
+  height: 40px;
+  width: 90px;
+  border-radius: 20px;
+  position: absolute;
+  bottom: 8%;
+  left: 48%;
+  transform: translate(-50%, -50%);
+  background: #4f8760;
+}
+
+.btn-settings {
+  background-color: #4e4e5b;
+  margin: 10px;
+  border: 1px solid #4e4e5b;
+  border-radius: 10px;
+  padding: 2px 5px;
+  min-width: 40px;
+  color: white;
+  font-size: 2em;
+  cursor:pointer;
+}
+
+.settings {
+  margin: auto;
+  width: 80%;
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr;
+  align-items: center;
+}
+
+#reset {
+  border-radius: 50px;
+  width: 80px;
+  height: 80px;
+  background: #074082;
+  transform: translate(0%, 50%);
+  
+}
+
+#work, #break {
+  color: #4e4e5b;
+  font-weight: bold;
+} 
+
+#work p, #break p {
+  color: #074082;
+  background: #efc4c4;
+  padding: 5px;
+}
+
+.footer {
+  padding: 20px 0;
+  color: #4e4e5b;
+}
+
+@media only screen and (max-width: 400px) {
+  .timerDisplay {
+  font-size: 2.5em;
+  }
+}
