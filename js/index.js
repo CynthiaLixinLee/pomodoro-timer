@@ -69,10 +69,14 @@ document.querySelector("#break-minus").onclick = function() {
   y > 5 ? y-=5 : y;
 }
 
-/* RUNS 10X PER SECOND TO UPDATE HTML CONTENT */
-window.setInterval(function() {
-  isBreak ? status.textContent = "Keep Working" : status.textContent = "Take a Break!";
+/* UPDATE HTML CONTENT */
+function countdownDisplay() {
+  let minutes = Math.floor(seconds / 60);
+  let remainderSeconds = seconds % 60;
+  timerDisplay.textContent = `${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`;
+}
 
+function buttonDisplay() {
   if (isPaused && countdown === 0) {
     startBtn.textContent = "START";
   } else if (isPaused && countdown !== 0) {
@@ -80,12 +84,12 @@ window.setInterval(function() {
   } else {
     startBtn.textContent = "Pause";
   }
+}
 
+window.setInterval(function() {
+  countdownDisplay();
+  buttonDisplay();
+  isBreak ? status.textContent = "Keep Working" : status.textContent = "Take a Break!";
   workMin.textContent = x;
   breakMin.textContent = y;
-
-  // Updates countdown display
-  let minutes = Math.floor(seconds / 60);
-  let remainderSeconds = seconds % 60;
-  timerDisplay.textContent = `${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`;
 }, 100);
