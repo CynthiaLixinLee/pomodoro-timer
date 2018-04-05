@@ -1,7 +1,7 @@
 let countdown = 0; // variable to set/clear intervals
 let seconds = 1500; // seconds left on the clock
-let workDuration = 25;
-let breakDuration = 5;
+let workTime = 25;
+let breakTime = 5;
 let isBreak = true;
 let isPaused = true;
 
@@ -27,7 +27,7 @@ startBtn.addEventListener('click', () => {
 
 resetBtn.addEventListener('click', () => {
   clearInterval(countdown);
-  seconds = workDuration * 60;
+  seconds = workTime * 60;
   countdown = 0;
   isPaused = true;
   isBreak = true;
@@ -40,7 +40,7 @@ function timer() {
     clearInterval(countdown);
     alarm.currentTime = 0;
     alarm.play();
-    seconds = (isBreak ? breakDuration : workDuration) * 60;
+    seconds = (isBreak ? breakTime : workTime) * 60;
     isBreak = !isBreak;
   }
 }
@@ -49,17 +49,16 @@ function timer() {
 /* UPDATE WORK AND BREAK TIMES */
 let increment = 5;
 
-document.querySelector("#work-plus").onclick = function() {
-  workDuration < 60 ? workDuration += increment : workDuration;
-}
-document.querySelector("#work-minus").onclick = function() {
-  workDuration > 5 ? workDuration -= increment : workDuration;
-}
-document.querySelector("#break-plus").onclick = function() {
-  breakDuration < 60 ? breakDuration += increment : breakDuration;
-}
-document.querySelector("#break-minus").onclick = function() {
-  breakDuration > 5 ? breakDuration -= increment : breakDuration;
+let incrementFunctions =
+    {"#work-plus": function () { workTime = Math.min(workTime + increment, 60)},
+     "#work-minus": function () { workTime = Math.max(workTime - increment, 5)},
+     "#break-plus": function () { breakTime = Math.min(breakTime + increment, 60)},
+     "#break-minus": function () { breakTime = Math.max(breakTime - increment, 5)}};
+
+for (var key in incrementFunctions) {
+    if (incrementFunctions.hasOwnProperty(key)) {
+      document.querySelector(key).onclick = incrementFunctions[key];
+    }
 }
 
 /* UPDATE HTML CONTENT */
@@ -83,8 +82,8 @@ function updateHTML() {
   countdownDisplay();
   buttonDisplay();
   isBreak ? status.textContent = "Keep Working" : status.textContent = "Take a Break!";
-  workMin.textContent = workDuration;
-  breakMin.textContent = breakDuration;
+  workMin.textContent = workTime;
+  breakMin.textContent = breakTime;
 }
 
 document.onclick = function() {
