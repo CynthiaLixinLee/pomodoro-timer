@@ -1,5 +1,7 @@
 let countdown = 0; // variable to set/clear intervals
 let seconds = 1500; // seconds left on the clock
+let workDuration = 25;
+let breakDuration = 5;
 let isBreak = true;
 let isPaused = true;
 
@@ -10,9 +12,6 @@ const resetBtn = document.querySelector("#reset");
 const workMin = document.querySelector("#work-min");
 const breakMin = document.querySelector("#break-min");
 
-let x = parseInt(workMin.textContent);  // Work duration
-let y = parseInt(breakMin.textContent);  // Break duration
-
 const alarm = document.createElement('audio'); // A bell sound will play when the timer reaches 0
 alarm.setAttribute("src", "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3");
 
@@ -20,17 +19,15 @@ alarm.setAttribute("src", "https://www.soundjay.com/misc/sounds/bell-ringing-05.
 /* EVENT LISTENERS FOR START AND RESET BUTTONS */
 startBtn.addEventListener('click', () => {
   clearInterval(countdown);
-  if (isPaused) {
+  isPaused = !isPaused;
+  if (!isPaused) {
     countdown = setInterval(timer, 1000);
-    isPaused = false;
-  } else {
-    isPaused = true;
   }
 })
 
 resetBtn.addEventListener('click', () => {
   clearInterval(countdown);
-  seconds = x * 60;
+  seconds = workDuration * 60;
   countdown = 0;
   isPaused = true;
   isBreak = true;
@@ -43,30 +40,26 @@ function timer() {
     clearInterval(countdown);
     alarm.currentTime = 0;
     alarm.play();
-
-    if (isBreak) {
-      seconds = y * 60;
-      isBreak = false;
-    } else {
-      seconds = x * 60;
-      isBreak = true;
-    }
+    seconds = (isBreak ? breakDuration : workDuration) * 60;
+    isBreak = !isBreak;
   }
 }
 
 
 /* UPDATE WORK AND BREAK TIMES */
+let increment = 5;
+
 document.querySelector("#work-plus").onclick = function() {
-  x < 60 ? x+=5 : x;
+  workDuration < 60 ? workDuration += increment : workDuration;
 }
 document.querySelector("#work-minus").onclick = function() {
-  x > 5 ? x-=5 : x;
+  workDuration > 5 ? workDuration -= increment : workDuration;
 }
 document.querySelector("#break-plus").onclick = function() {
-  y < 60 ? y+=5 : y;
+  breakDuration < 60 ? breakDuration += increment : breakDuration;
 }
 document.querySelector("#break-minus").onclick = function() {
-  y > 5 ? y-=5 : y;
+  breakDuration > 5 ? breakDuration -= increment : breakDuration;
 }
 
 /* UPDATE HTML CONTENT */
@@ -86,10 +79,14 @@ function buttonDisplay() {
   }
 }
 
-window.setInterval(function() {
+function updateHTML() {
   countdownDisplay();
   buttonDisplay();
   isBreak ? status.textContent = "Keep Working" : status.textContent = "Take a Break!";
-  workMin.textContent = x;
-  breakMin.textContent = y;
-}, 100);
+  workMin.textContent = workDuration;
+  breakMin.textContent = breakDuration;
+}
+
+document.onclick = function() {
+  window.setInterval(updateHTML, 100);
+}
