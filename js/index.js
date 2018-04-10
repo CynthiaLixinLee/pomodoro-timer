@@ -35,7 +35,7 @@ resetBtn.addEventListener('click', () => {
 
 /* TIMER - HANDLES COUNTDOWN */
 function timer() {
-  seconds --;
+  seconds--;
   if (seconds < 0) {
     clearInterval(countdown);
     alarm.currentTime = 0;
@@ -50,15 +50,17 @@ function timer() {
 let increment = 5;
 
 let incrementFunctions =
-    {"#work-plus": function () { workTime = Math.min(workTime + increment, 60)},
-     "#work-minus": function () { workTime = Math.max(workTime - increment, 5)},
-     "#break-plus": function () { breakTime = Math.min(breakTime + increment, 60)},
-     "#break-minus": function () { breakTime = Math.max(breakTime - increment, 5)}};
+  {
+    "#work-plus": function () { workTime = Math.min(workTime + increment, 60) },
+    "#work-minus": function () { workTime = Math.max(workTime - increment, 5) },
+    "#break-plus": function () { breakTime = Math.min(breakTime + increment, 60) },
+    "#break-minus": function () { breakTime = Math.max(breakTime - increment, 5) }
+  };
 
 for (var key in incrementFunctions) {
-    if (incrementFunctions.hasOwnProperty(key)) {
-      document.querySelector(key).onclick = incrementFunctions[key];
-    }
+  if (incrementFunctions.hasOwnProperty(key)) {
+    document.querySelector(key).onclick = incrementFunctions[key];
+  }
 }
 
 /* UPDATE HTML CONTENT */
@@ -86,6 +88,6 @@ function updateHTML() {
   breakMin.textContent = breakTime;
 }
 
-document.onclick = function() {
-  window.setInterval(updateHTML, 100);
-}
+window.setInterval(updateHTML, 100);
+
+document.onclick = updateHTML;
